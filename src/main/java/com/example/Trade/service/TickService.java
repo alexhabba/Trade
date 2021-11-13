@@ -1,10 +1,11 @@
-package com.example.Trade.dao;
+package com.example.Trade.service;
 
 import com.example.Trade.model.Tick;
 
+import java.nio.file.Path;
 import java.util.Map;
 
-public interface TickRepository {
+public interface TickService {
 
     void save(Tick tick);
 
@@ -12,7 +13,8 @@ public interface TickRepository {
 
     Map<String, Tick> findAll();
 
-    void delete(String id);
-
     void saveAll(Map<String, Tick> map);
+
+    void createTick(Path path);
+
 }
