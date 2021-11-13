@@ -33,7 +33,7 @@ public class EmployeeController {
 	}
 
 	// Get all employees.
-	// Url - http://localhost:10091/api/redis/employee/getall
+	// Url - http://localhost:8080/api/redis/employee/getall
 	@GetMapping("/getall")
 	public Map<String, Employee> findAll() {
 		LOG.info("Fetching all employees from the redis.");
@@ -43,7 +43,7 @@ public class EmployeeController {
 	}
 
 	// Get employee by id.
-	// Url - http://localhost:10091/api/redis/employee/get/<employee_id>
+	// Url - http://localhost:8080/api/redis/employee/get/<employee_id>
 	@GetMapping("/get/{id}")
 	public Employee findById(@PathVariable("id") final String id) {
 		LOG.info("Fetching employee with id= " + id);
@@ -51,7 +51,7 @@ public class EmployeeController {
 	}
 
 	// Delete employee by id.
-	// Url - http://localhost:10091/api/redis/employee/delete/<employee_id>
+	// Url - http://localhost:8080/api/redis/employee/delete/<employee_id>
 	@DeleteMapping("/delete/{id}")
 	public Map<String, Employee> delete(@PathVariable("id") final String id) {
 		LOG.info("Deleting employee with id= " + id);
