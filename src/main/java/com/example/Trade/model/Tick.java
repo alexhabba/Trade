@@ -1,17 +1,31 @@
 package com.example.Trade.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Tick implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private int      volume;
-    private int      count;
-    private String   symbol;
+    private double   price;
+    private String   operation;
     private String   date;
     private String   time;
     private String   mls;
+    private int      count;
+    private String   symbol;
+
+    public Tick(int volume, double price, String operation, String date, String time, String mls, int count, String symbol) {
+        this.volume = volume;
+        this.price = price;
+        this.operation = operation;
+        this.date = date;
+        this.time = time;
+        this.mls = mls;
+        this.count = count;
+        this.symbol = symbol;
+    }
 
     public int getVolume() {
         return volume;
@@ -71,15 +85,48 @@ public class Tick implements Serializable {
         return this;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public Tick setPrice(double price) {
+        this.price = price;
+        return this;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public Tick setOperation(String operation) {
+        this.operation = operation;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tick)) return false;
+        Tick tick = (Tick) o;
+        return getVolume() == tick.getVolume() && Double.compare(tick.price, price) == 0 && getCount() == tick.getCount() && Objects.equals(operation, tick.operation) && Objects.equals(getDate(), tick.getDate()) && Objects.equals(getTime(), tick.getTime()) && Objects.equals(getMls(), tick.getMls()) && Objects.equals(getSymbol(), tick.getSymbol());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getVolume(), price, operation, getDate(), getTime(), getMls(), getCount(), getSymbol());
+    }
+
     @Override
     public String toString() {
         return "Tick{" +
                 "volume=" + volume +
-                ", count=" + count +
-                ", symbol='" + symbol + '\'' +
+                ", price=" + price +
+                ", operation='" + operation + '\'' +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
                 ", mls='" + mls + '\'' +
+                ", count=" + count +
+                ", symbol='" + symbol + '\'' +
                 '}';
     }
 }
