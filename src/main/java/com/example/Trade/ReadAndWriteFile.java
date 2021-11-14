@@ -5,8 +5,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReadAndWriteFile {
 
@@ -29,8 +29,9 @@ public class ReadAndWriteFile {
     public static List<String> readFile(Path path) {
         try {
             byte[] bytes = Files.readAllBytes(path);
-            return Files.readAllLines(path);
+//            return Files.readAllLines(path);
 //            return Arrays.asList((new String(bytes, StandardCharsets.UTF_16)).split("\\n"));
+            return Files.lines(path, StandardCharsets.UTF_16).collect(Collectors.toList());
         } catch (IOException e) {
             System.out.println("Ошибка чтения файла");
             return List.of();
