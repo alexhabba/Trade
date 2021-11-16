@@ -17,16 +17,11 @@ public class TickController {
 	@Autowired
 	TickService tickService;
 
-	// Get all tics.
 	// Url - http://localhost:8080/getall
 	@GetMapping("/getAll")
 	public Map<String, Tick> findAll() {
-		System.out.println(getClass().getClassLoader().getResource("logging.properties"));
-		LOG.info("Fetching all employees from the redis.");
-		LOG.error("sdfasdgfdfgdsfgdsfgdfgsdf");
-		Map<String, Tick> tickMap = tickService.findAll();
-		System.out.println("в мапе столко елементов   =  " + tickMap.size());
-		return tickMap;
+		LOG.info("get all ticks from the redis.");
+		return tickService.findAll();
 	}
 
 }
