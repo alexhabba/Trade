@@ -34,6 +34,11 @@ public class TickRepositoryImpl implements TickRepository {
     }
 
     @Override
+    public long getSize() {
+        return hashOperations.size(TICKS);
+    }
+
+    @Override
     public Tick findById(String id) {
         return hashOperations.get(TICKS, id);
     }
