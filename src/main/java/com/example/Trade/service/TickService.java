@@ -2,7 +2,6 @@ package com.example.Trade.service;
 
 import com.example.Trade.model.Tick;
 
-import java.nio.file.Path;
 import java.util.Map;
 
 public interface TickService {
@@ -15,6 +14,8 @@ public interface TickService {
 
     void saveAll(Map<String, Tick> map);
 
-    void createTick(Path path);
+    void delete(String id);
+
+    long getSize();
 
 }

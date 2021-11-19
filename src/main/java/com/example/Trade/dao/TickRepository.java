@@ -15,4 +15,7 @@ public interface TickRepository {
     void delete(String id);
 
     void saveAll(Map<String, Tick> map);
+
+    long getSize();
+
 }
