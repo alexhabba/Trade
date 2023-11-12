@@ -9,10 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 public class TradeApplication {
 
-    public static void main(String[] args) throws InterruptedException {
-        String log4jConfPath = "log4j.properties";
-        PropertyConfigurator.configure(log4jConfPath);
+    public static void main(String[] args) {
         SpringApplication.run(TradeApplication.class, args);
     }
-
 }

@@ -1,0 +1,13 @@
+#server.port=8085
+spring:
+  redis:
+    host: localhost
+    port: 6379
+    ttl: 1000
+
+#source.file: '/Users/alex/Library/Application Support/MetaTrader 5/Bottles/metatrader5/drive_c/Program Files/MetaTrader 5/MQL5/Files/Research/tick.txt'
+
+
+#actual
+source.file: '/Users/alex/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/MQL5/Files/Research/tick.txt'
+#source.file: 'src/main/resources/s&p_2023.07.11.txt'

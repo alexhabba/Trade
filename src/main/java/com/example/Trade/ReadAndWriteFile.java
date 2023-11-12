@@ -34,7 +34,7 @@ public class ReadAndWriteFile {
         try {
             return Files.lines(path, StandardCharsets.UTF_16).collect(Collectors.toList());
         } catch (IOException e) {
-            LOG.error("Не удалось прочитать файл path = " + path, e);
+            LOG.debug("Не удалось прочитать файл path = " + path);
             return List.of();
         }
     }
