@@ -69,13 +69,11 @@ public class BarOneSecondsJob {
             return;
         }
         Bar join = barCompletableFuture.join();
-        int size = listTickFromFile.size();
         if (nonNull(join)) {
             listTickFromFile = listTickFromFile.stream()
                     .filter(tick -> (tick.getDate() + " " + tick.getTime()).compareTo(join.getDateTime()) >= 0)
                     .collect(Collectors.toList());
         }
-        int size1 = listTickFromFile.size();
 
         Map<String, Bar> barMap = createBarOneSeconds(listTickFromFile)
                 .stream()

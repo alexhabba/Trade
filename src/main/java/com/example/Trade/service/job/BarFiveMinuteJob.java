@@ -3,7 +3,6 @@ package com.example.Trade.service.job;
 import com.example.Trade.dao.BarRepository;
 import com.example.Trade.model.Bar;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +13,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import static com.example.Trade.dao.BarRepository.FIVE_MINUTE;
 import static com.example.Trade.dao.BarRepository.ONE_MINUTE;
-import static com.example.Trade.dao.BarRepository.ONE_SECONDS;
 
 @Service
 public class BarFiveMinuteJob {
@@ -114,11 +113,32 @@ public class BarFiveMinuteJob {
 
                         volumeBuy += bos.getVolumeBuy();
                         volumeSell += bos.getVolumeSell();
+                    } else if (minute % interval == 0 && bars.size() == count.get()) {
+                        open = bos.getOpen();
+                        close = bos.getClose();
+                        high = bos.getHigh();
+                        low = bos.getLow();
+                        volumeBuy = bos.getVolumeBuy();
+                        volumeSell = bos.getVolumeSell();
+                        minuteStatic = minute;
+
+                        Bar ba1 = Bar.builder()
+                                .open(open)
+                                .close(close)
+                                .high(high)
+                                .low(low)
+                                .dateTime(bos.getDateTime())
+                                .volumeBuy(volumeBuy)
+                                .volumeSell(volumeSell)
+                                .symbol(bos.getSymbol())
+                                .interval(interval * 60)
+                                .build();
+                        barList.add(ba1);
                     } else {
                         open = bos.getOpen();
-                        close = bos.getOpen();
-                        high = bos.getOpen();
-                        low = bos.getOpen();
+                        close = bos.getClose();
+                        high = bos.getHigh();
+                        low = bos.getLow();
                         volumeBuy = bos.getVolumeBuy();
                         volumeSell = bos.getVolumeSell();
                         minuteStatic = minute;

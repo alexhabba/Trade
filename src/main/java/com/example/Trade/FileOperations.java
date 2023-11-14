@@ -76,8 +76,6 @@ public class FileOperations {
 
     private static Tick getTick(String[] s, Path path) {
         try {
-
-
             if (s.length != 5 || s[4].split(":").length != 3 || s[4].split(":")[2].length() != 2 || s[3].length() != 10 || s[4].length() != 8) {
                 System.out.println(Arrays.toString(s));
                 return null;

@@ -14,5 +14,8 @@ public class MainTest {
 
 //        tick > bar
         System.out.println(res1.compareTo(res2) > 0);
+
+        String str = "14:05:54";
+        System.out.println(str.contains("14:05"));
     }
 }
