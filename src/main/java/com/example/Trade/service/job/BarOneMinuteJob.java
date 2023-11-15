@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,7 @@ import static com.example.Trade.FileOperations.getListTickFromFile;
 import static com.example.Trade.dao.BarRepository.ONE_MINUTE;
 import static com.example.Trade.dao.BarRepository.ONE_SECONDS;
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Service
 public class BarOneMinuteJob {
@@ -49,13 +51,38 @@ public class BarOneMinuteJob {
      */
     @Scheduled(fixedDelay = 1300)
     public void createBarOneMinute() {
+        CompletableFuture<Bar> barCompletableFuture = getBarCompletableFuture();
+
         List<Bar> barOneSeconds = barRepository.findAll(ONE_SECONDS).stream()
                 .sorted(Comparator.comparing(Bar::getDateTime))
                 .collect(Collectors.toList());
+
+        Bar join = barCompletableFuture.join();
+        if (nonNull(join)) {
+            barOneSeconds = barOneSeconds.stream()
+                    .filter(bar -> bar.getDateTime().compareTo(join.getDateTime()) >= 0)
+                    .collect(Collectors.toList());
+        }
         Map<String, Bar> barMap = createBarOneMinute(barOneSeconds).stream()
                 .collect(Collectors.toMap(Bar::getDateTime, b -> b, (b1, b2) -> b2));
-
+        System.out.println("ONE_MINUTE " + barMap.size());
         barRepository.addAll(ONE_MINUTE, barMap);
+    }
+
+    private CompletableFuture<Bar> getBarCompletableFuture() {
+        // Получаем последний добавленный бар
+        return CompletableFuture.supplyAsync(() -> {
+            int i = 0;
+            while (i < 300) {
+                String dateTime = LocalDateTime.now().minusHours(3).minusMinutes(i++).toString().split("\\.")[0]
+                        .replace("T", " ").replace("-", ".").substring(0, 17) + "00";
+                Bar bar = barRepository.findById(ONE_MINUTE, dateTime);
+                if (nonNull(bar)) {
+                    return bar;
+                }
+            }
+            return null;
+        });
     }
 
     public List<Bar> createBarOneMinute(List<Bar> bars) {

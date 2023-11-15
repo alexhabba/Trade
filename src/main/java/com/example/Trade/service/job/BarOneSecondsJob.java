@@ -49,20 +49,9 @@ public class BarOneSecondsJob {
     /**
      * Получение 1 секундных баров из тиков и сохранение их в бд
      */
-    @Scheduled(fixedDelay = 1300)
+    @Scheduled(fixedDelay = 130)
     public void createBarOneSeconds() {
-        // Получаем последний добавленный бар
-        CompletableFuture<Bar> barCompletableFuture = CompletableFuture.supplyAsync(() -> {
-            int i = 1;
-            while (i < 300) {
-                String dateTime = LocalDateTime.now().minusHours(3).minusSeconds(i++).toString().split("\\.")[0].replace("T", " ").replace("-", ".");
-                Bar bar = barRepository.findById(ONE_SECONDS, dateTime);
-                if (nonNull(bar)) {
-                    return bar;
-                }
-            }
-            return null;
-        });
+        CompletableFuture<Bar> barCompletableFuture = getBarCompletableFuture();
 
         List<Tick> listTickFromFile = getListTickFromFile(Path.of(path));
         if (listTickFromFile.isEmpty()) {
@@ -79,7 +68,23 @@ public class BarOneSecondsJob {
                 .stream()
                 .collect(Collectors.toMap(Bar::getDateTime, b -> b, (b1, b2) -> b2));
 
+        System.out.println("ONE_SECONDS " + barMap.size());
         barRepository.addAll(ONE_SECONDS, barMap);
+    }
+
+    private CompletableFuture<Bar> getBarCompletableFuture() {
+        // Получаем последний добавленный бар
+        return CompletableFuture.supplyAsync(() -> {
+            int i = 0;
+            while (i < 300) {
+                String dateTime = LocalDateTime.now().minusHours(3).minusSeconds(i++).toString().split("\\.")[0].replace("T", " ").replace("-", ".");
+                Bar bar = barRepository.findById(ONE_SECONDS, dateTime);
+                if (nonNull(bar)) {
+                    return bar;
+                }
+            }
+            return null;
+        });
     }
 
     public List<Bar> createBarOneSeconds(List<Tick> ticks) {

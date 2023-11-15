@@ -17,5 +17,10 @@ public class MainTest {
 
         String str = "14:05:54";
         System.out.println(str.contains("14:05"));
+
+        String dateTime = LocalDateTime.now().minusHours(3).minusMinutes(10).toString().split("\\.")[0]
+                .replace("T", " ").replace("-", ".").substring(0, 17) + "00";
+
+        System.out.println(dateTime.substring(0, 17) + "00");
     }
 }
