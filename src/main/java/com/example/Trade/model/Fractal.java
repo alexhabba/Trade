@@ -16,7 +16,6 @@ public class Fractal implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String dateTime;
-    private int period;
     private double highFractalPrice;
     private double lowFractalPrice;
     private int interval;

@@ -65,7 +65,6 @@ public class BarOneMinuteJob {
         }
         Map<String, Bar> barMap = createBarOneMinute(barOneSeconds).stream()
                 .collect(Collectors.toMap(Bar::getDateTime, b -> b, (b1, b2) -> b2));
-        System.out.println("ONE_MINUTE " + barMap.size());
         barRepository.addAll(ONE_MINUTE, barMap);
     }
 
@@ -136,6 +135,9 @@ public class BarOneMinuteJob {
                             .interval(60)
                             .build();
 
+//                    if (nonNull(lastBar) && (lastBar.getVolumeBuy() < bar.getVolumeBuy() || lastBar.getVolumeSell() < bar.getVolumeSell())) {
+//                        return;
+//                    }
                     barList.add(bar);
 
                     open = bos.getOpen();

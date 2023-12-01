@@ -39,14 +39,15 @@ public class BarFiveMinuteJob {
     private BarRepository barRepository;
 
     /**
-     * Получение 1 секундных баров из тиков и сохранение их в бд
+     *
      */
     @Scheduled(fixedDelay = 1300)
     public void createBarFiveMinute() {
-        List<Bar> barOneSeconds = barRepository.findAll(ONE_MINUTE).stream()
+        // todo добавить распараллеливание
+        List<Bar> barOneMinutes = barRepository.findAll(ONE_MINUTE).stream()
                 .sorted(Comparator.comparing(Bar::getDateTime))
                 .collect(Collectors.toList());
-        Map<String, Bar> barMap = createBarOneMinute(barOneSeconds, 5).stream()
+        Map<String, Bar> barMap = createBarOneMinute(barOneMinutes, 5).stream()
                 .collect(Collectors.toMap(Bar::getDateTime, b -> b, (b1, b2) -> b1));
 
         barMap.values()

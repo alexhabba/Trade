@@ -68,7 +68,7 @@ public class BarOneSecondsJob {
                 .stream()
                 .collect(Collectors.toMap(Bar::getDateTime, b -> b, (b1, b2) -> b2));
 
-        System.out.println("ONE_SECONDS " + barMap.size());
+//        System.out.println("ONE_SECONDS " + barMap.size());
         barRepository.addAll(ONE_SECONDS, barMap);
     }
 
