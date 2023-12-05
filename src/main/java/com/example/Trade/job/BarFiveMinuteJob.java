@@ -1,4 +1,4 @@
-package com.example.Trade.service.job;
+package com.example.Trade.job;
 
 import com.example.Trade.dao.BarRepository;
 import com.example.Trade.model.Bar;

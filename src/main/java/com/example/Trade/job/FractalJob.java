@@ -1,4 +1,4 @@
-package com.example.Trade.service.job;
+package com.example.Trade.job;
 
 import com.example.Trade.dao.FractalRepository;
 import com.example.Trade.model.Bar;
@@ -9,10 +9,12 @@ import lombok.SneakyThrows;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
+import static com.example.Trade.utils.ReadAndWriteFile.writeFileAppend;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
@@ -47,6 +49,7 @@ public class FractalJob {
                     .lowFractalPrice(bar.getLow())
                     .build();
             fractalRepository.add(FractalRepository.FRACTAL_ONE_MINUTE, fractal);
+            writeFileAppend(Path.of("/Users/alex/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/MQL5/Files/Research/testRead.txt"), "sell");
         }
 
         if (isHighFractalLeft(bars, median) && isHighFractalRight(bars, median)) {
@@ -57,6 +60,7 @@ public class FractalJob {
                     .highFractalPrice(bar.getHigh())
                     .build();
             fractalRepository.add(FractalRepository.FRACTAL_ONE_MINUTE, fractal);
+            writeFileAppend(Path.of("/Users/alex/Library/Application Support/net.metaquotes.wine.metatrader5/drive_c/Program Files/MetaTrader 5/MQL5/Files/Research/testRead.txt"), "buy");
         }
     }
 

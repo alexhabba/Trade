@@ -1,4 +1,4 @@
-package com.example.Trade;
+package com.example.Trade.utils;
 
 import com.example.Trade.model.Symbol;
 import com.example.Trade.model.Tick;

@@ -1,4 +1,4 @@
-package com.example.Trade.service.job;
+package com.example.Trade.job;
 
 import com.example.Trade.dao.BarRepository;
 import com.example.Trade.model.Bar;
@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import static com.example.Trade.FileOperations.getListTickFromFile;
+import static com.example.Trade.utils.FileOperations.getListTickFromFile;
 import static com.example.Trade.dao.BarRepository.ONE_SECONDS;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;

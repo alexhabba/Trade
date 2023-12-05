@@ -1,19 +1,14 @@
-package com.example.Trade.service.job;
+package com.example.Trade.job;
 
 import com.example.Trade.dao.BarRepository;
 import com.example.Trade.model.Bar;
-import com.example.Trade.model.Symbol;
-import com.example.Trade.model.Tick;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +16,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import static com.example.Trade.FileOperations.getListTickFromFile;
 import static com.example.Trade.dao.BarRepository.ONE_MINUTE;
 import static com.example.Trade.dao.BarRepository.ONE_SECONDS;
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
